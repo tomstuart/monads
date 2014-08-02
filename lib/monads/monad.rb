@@ -1,5 +1,11 @@
 module Monads
   module Monad
+    def within(&block)
+      and_then do |value|
+        self.class.from_value(block.call(value))
+      end
+    end
+
     private
 
     def ensure_monadic_result(&block)

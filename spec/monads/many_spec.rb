@@ -47,5 +47,27 @@ module Monads
         expect(Many.from_value(value).values).to eq [value]
       end
     end
+
+    describe '#within' do
+      context 'when there aren’t any values' do
+        let(:values) { [] }
+
+        it 'doesn’t call the block' do
+          expect { |block| many.within(&block) }.not_to yield_control
+        end
+      end
+
+      context 'when there are values' do
+        let(:values) { [1, 2, 3] }
+
+        it 'calls the block with each value' do
+          expect { |block| many.within(&block) }.to yield_successive_args(*values)
+        end
+
+        it 'returns a flattened version of the block’s results wrapped in a Many' do
+          expect(many.within { |value| value * 2 }.values).to eq [2, 4, 6]
+        end
+      end
+    end
   end
 end

@@ -49,5 +49,32 @@ module Monads
         expect(Optional.from_value(value).value).to eq value
       end
     end
+
+    describe '#within' do
+      context 'when the value is nil' do
+        before(:example) do
+          allow(value).to receive(:nil?).and_return(true)
+        end
+
+        it 'doesn’t call the block' do
+          expect { |block| optional.within(&block) }.not_to yield_control
+        end
+      end
+
+      context 'when the value isn’t nil' do
+        before(:example) do
+          allow(value).to receive(:nil?).and_return(false)
+        end
+
+        it 'calls the block with the value' do
+          expect { |block| optional.within(&block) }.to yield_with_args(value)
+        end
+
+        it 'returns the block’s result wrapped in an Optional' do
+          result = double
+          expect(optional.within { result }.value).to eq result
+        end
+      end
+    end
   end
 end
