@@ -76,5 +76,22 @@ module Monads
         end
       end
     end
+
+    describe 'handling unrecognised messages' do
+      let(:response) { double }
+
+      before(:example) do
+        allow(value).to receive(:challenge).and_return(response)
+      end
+
+      it 'forwards any unrecognised message to the value' do
+        expect(value).to receive(:challenge)
+        optional.challenge
+      end
+
+      it 'returns the message’s result wrapped in an Optional' do
+        expect(optional.challenge.value).to eq response
+      end
+    end
   end
 end

@@ -88,5 +88,25 @@ module Monads
         end
       end
     end
+
+    describe 'handling unrecognised messages' do
+      let(:value) { double }
+      let(:response) { double }
+
+      before(:example) do
+        allow(value).to receive(:challenge).and_return(response)
+      end
+
+      it 'forwards any unrecognised message to the block’s value' do
+        expect(value).to receive(:challenge)
+        Eventually.new { |success| success.call(value) }.challenge.run {}
+      end
+
+      it 'returns the message’s result wrapped in an Eventually' do
+        @result = nil
+        Eventually.new { |success| success.call(value) }.challenge.run { |result| @result = result }
+        expect(@result).to eq response
+      end
+    end
   end
 end

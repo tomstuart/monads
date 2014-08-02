@@ -6,6 +6,12 @@ module Monads
       end
     end
 
+    def method_missing(*args, &block)
+      within do |value|
+        value.public_send(*args, &block)
+      end
+    end
+
     private
 
     def ensure_monadic_result(&block)

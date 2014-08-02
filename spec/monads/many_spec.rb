@@ -69,5 +69,27 @@ module Monads
         end
       end
     end
+
+    describe 'handling unrecognised messages' do
+      let(:values) { [double, double, double] }
+      let(:responses) { [double, double, double] }
+
+      before(:example) do
+        values.zip(responses) do |value, response|
+          allow(value).to receive(:challenge).and_return(response)
+        end
+      end
+
+      it 'forwards any unrecognised message to each value' do
+        values.each do |value|
+          expect(value).to receive(:challenge)
+        end
+        many.challenge
+      end
+
+      it 'returns the messages’ results wrapped in a Many' do
+        expect(many.challenge.values).to eq responses
+      end
+    end
   end
 end
