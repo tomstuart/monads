@@ -9,5 +9,9 @@ module Monads
 
       Many.new(values.map(&block).flat_map(&:values))
     end
+
+    def self.from_value(value)
+      Many.new([value])
+    end
   end
 end

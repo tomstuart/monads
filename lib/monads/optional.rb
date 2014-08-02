@@ -13,5 +13,9 @@ module Monads
         block.call(value)
       end
     end
+
+    def self.from_value(value)
+      Optional.new(value)
+    end
   end
 end

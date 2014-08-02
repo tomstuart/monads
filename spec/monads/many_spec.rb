@@ -39,5 +39,13 @@ module Monads
         end
       end
     end
+
+    describe '.from_value' do
+      let(:value) { double }
+
+      it 'wraps a value in a Many' do
+        expect(Many.from_value(value).values).to eq [value]
+      end
+    end
   end
 end

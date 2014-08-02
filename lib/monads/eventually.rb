@@ -21,5 +21,11 @@ module Monads
         end
       end
     end
+
+    def self.from_value(value)
+      Eventually.new do |success|
+        success.call(value)
+      end
+    end
   end
 end

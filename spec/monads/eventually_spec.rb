@@ -55,5 +55,15 @@ module Monads
         end
       end
     end
+
+    describe '.from_value' do
+      let(:value) { double }
+
+      it 'wraps a value in an Eventually' do
+        @result = nil
+        Eventually.from_value(value).run { |value| @result = value }
+        expect(@result).to eq value
+      end
+    end
   end
 end

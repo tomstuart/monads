@@ -43,5 +43,11 @@ module Monads
         end
       end
     end
+
+    describe '.from_value' do
+      it 'wraps a value in an Optional' do
+        expect(Optional.from_value(value).value).to eq value
+      end
+    end
   end
 end
