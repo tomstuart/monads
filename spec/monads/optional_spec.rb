@@ -29,13 +29,17 @@ module Monads
 
         it 'calls the block with the value' do
           @value = nil
-          optional.and_then { |value| @value = value }
+          optional.and_then { |value| @value = value; Optional.new(double) }
           expect(@value).to eq value
         end
 
         it 'returns the block’s result' do
           result = double
           expect(optional.and_then { |value| Optional.new(result) }.value).to eq result
+        end
+
+        it 'raises an error if the block doesn’t return another Optional' do
+          expect { optional.and_then { double } }.to raise_error(TypeError)
         end
       end
     end

@@ -33,6 +33,10 @@ module Monads
         it 'returns a flattened version of the block’s results' do
           expect(many.and_then { |value| Many.new(value * 2) }.values).to eq [2, 4, 6]
         end
+
+        it 'raises an error if the block doesn’t return another Many' do
+          expect { many.and_then { double } }.to raise_error(TypeError)
+        end
       end
     end
   end
