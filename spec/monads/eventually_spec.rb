@@ -13,5 +13,36 @@ module Monads
         expect(@result).to eq result
       end
     end
+
+    describe '#and_then' do
+      context 'when the Eventually succeeds synchronously' do
+        it 'arranges for the block to run when the Eventually succeeds' do
+          @result, intermediate_result, final_result = nil, double, double
+          Eventually.new { |success| success.call(intermediate_result) }.
+            and_then do |value|
+              if value == intermediate_result
+                Eventually.new { |success| success.call(final_result) }
+              end
+            end.
+            run { |value| @result = value }
+          expect(@result).to eq final_result
+        end
+      end
+
+      context 'when the Eventually succeds asynchronously' do
+        it 'arranges for the block to run when the Eventually succeeds' do
+          @result, intermediate_result, final_result = nil, double, double
+          Eventually.new { |success| @job = -> { success.call(intermediate_result) } }.
+            and_then do |value|
+              if value == intermediate_result
+                Eventually.new { |success| success.call(final_result) }
+              end
+            end.
+            run { |value| @result = value }
+          @job.call
+          expect(@result).to eq final_result
+        end
+      end
+    end
   end
 end
