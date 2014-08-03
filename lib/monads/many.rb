@@ -7,7 +7,7 @@ module Monads
     def and_then(&block)
       block = ensure_monadic_result(&block)
 
-      Many.new(values.map(&block).flat_map(&:values))
+      Many.new(values.flat_map { |*args| block.call(*args).values })
     end
 
     def self.from_value(value)
