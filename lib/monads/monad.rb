@@ -17,7 +17,7 @@ module Monads
     def ensure_monadic_result(&block)
       acceptable_result_type = self.class
 
-      -> *a, &b do
+      ->(*a, &b) do
         block.call(*a, &b).tap do |result|
           unless result.is_a?(acceptable_result_type)
             raise TypeError, "block must return #{acceptable_result_type.name}"
