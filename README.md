@@ -84,8 +84,10 @@ An `Eventually` object contains a value that will eventually be available, perha
 
 >> eventually_result = eventually_string.and_then do |string|
      Eventually.new do |success|
-       sleep 5
-       success.call(string.upcase)
+       Thread.new do
+         sleep 5
+         success.call(string.upcase)
+       end
      end
    end
 => #<struct Monads::Eventually block=#<Proc>>
