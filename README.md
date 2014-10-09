@@ -1,8 +1,31 @@
 # Monads
 
-[![Build Status](https://travis-ci.org/tomstuart/monads.svg?branch=master)](https://travis-ci.org/tomstuart/monads)
+This library is some specs that i stole from [tomstuart](https://github.com/tomstuart/monads) that are about [monads](http://en.wikipedia.org/wiki/Monad_(functional_programming)).
 
-This library provides simple Ruby implementations of some common [monads](http://en.wikipedia.org/wiki/Monad_(functional_programming)).
+[I read this thing by tomstuart](http://codon.com/refactoring-ruby-with-monads) that i thought was cool and so I wanted to tdd some monads so i was going to write some monad tests but then i realized that that would be hard and that tomstuart had, in fact, actually already written some monad tests!
+
+This thingy reflects how far I have progressed in understanding these monads: [![Build Status](https://travis-ci.org/coleww/TDD_SOME_monads.svg?branch=cole)](https://travis-ci.org/coleww/TDD_SOME_monads)
+
+In order to TDD some monads, I bet you have to first run something like:
+
+```console
+$ bundle
+```
+
+And then do that red-green-refactor business by running
+
+```console
+$ rspec
+```
+
+and maybe cheat by looking at the original repo.
+
+But I wouldn't actually know because I am doing this all via the github website and have not actually even cloned this thing yet. The internet is, pretty cool. It lets me be, really lazy. In good ways.
+
+
+
+#### The following is some stuff from the original repo that will probably be helpful:
+
 
 The most important method of each implementation is `#and_then` (a.k.a. `bind` or `>>=`), which is used to connect together a sequence of operations involving the value(s) inside the monad. Each monad also has a `.from_value` class method (a.k.a. `return` or `unit`) for constructing an instance of that monad from an arbitrary value.
 
