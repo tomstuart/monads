@@ -6,14 +6,19 @@ This library is some specs that i stole from [tomstuart](https://github.com/toms
 
 This thingy reflects how far I have progressed in understanding these monads: [![Build Status](https://travis-ci.org/coleww/TDD_SOME_monads.svg?branch=cole)](https://travis-ci.org/coleww/TDD_SOME_monads)
 
-In order to TDD some monads, I bet you have to run something like:
+In order to TDD some monads, I bet you have to first run something like:
 
 ```console
-$ bundle install
+$ bundle
+```
+
+And then do that red-green-refactor business by running
+
+```console
 $ rspec
 ```
 
-And then do that red-green-refactor business and maybe cheat by looking at the original repo.
+and maybe cheat by looking at the original repo.
 
 But I wouldn't actually know because I am doing this all via the github website and have not actually even cloned this thing yet. The internet is, pretty cool. It lets me be, really lazy. In good ways.
 
