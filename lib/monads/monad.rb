@@ -12,6 +12,10 @@ module Monads
       end
     end
 
+    def respond_to_missing?(method_name, include_all = false)
+      value.respond_to? method_name, include_all
+    end
+
     private
 
     def ensure_monadic_result(&block)
