@@ -94,6 +94,10 @@ module Monads
       it 'returns the message’s result wrapped in an Optional' do
         expect(optional.challenge.value).to eq response
       end
+
+      it 'correctly indicated whether a value can respond to a message' do
+        expect(optional).to respond_to :challenge
+      end
     end
   end
 end
