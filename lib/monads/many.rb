@@ -13,7 +13,7 @@ module Monads
     def and_then(&block)
       block = ensure_monadic_result(&block)
 
-      Many.new(values.map(&block).flat_map(&:values))
+      Many.new(values.map(&block).map(&:values).flatten)
     end
 
     def respond_to_missing?(method_name, include_private = false)
