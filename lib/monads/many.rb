@@ -11,7 +11,7 @@ module Monads
     end
 
     def self.from_value(value)
-      Many.new([value])
+      Many.new(Array(value))
     end
   end
 end
