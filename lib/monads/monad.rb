@@ -12,6 +12,12 @@ module Monads
       end
     end
 
+    def respond_to_missing?(method_name, include_private=false)
+      within do |value|
+        value.respond_to?(method_name, include_private)
+      end || super
+    end
+
     private
 
     def ensure_monadic_result(&block)

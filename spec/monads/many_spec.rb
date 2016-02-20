@@ -87,6 +87,8 @@ module Monads
           expect(value).to receive(:challenge)
         end
         many.challenge
+        expect { many.method(:challenge) }.not_to raise_error
+        expect(many).to respond_to(:challenge)
       end
 
       it 'returns the messages’ results wrapped in a Many' do

@@ -102,6 +102,8 @@ module Monads
       it 'forwards any unrecognised message to the block’s value' do
         expect(value).to receive(:challenge)
         Eventually.new { |success| success.call(value) }.challenge.run {}
+        expect { Eventually.new { |success| success.call(value) }.method(:challenge) }.not_to raise_error
+        expect(Eventually.new { |success| success.call(value) }).to respond_to(:challenge)
       end
 
       it 'returns the message’s result wrapped in an Eventually' do

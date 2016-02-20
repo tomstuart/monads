@@ -89,6 +89,8 @@ module Monads
       it 'forwards any unrecognised message to the value' do
         expect(value).to receive(:challenge)
         optional.challenge
+        expect { optional.method(:challenge) }.not_to raise_error
+        expect(optional).to respond_to(:challenge)
       end
 
       it 'returns the message’s result wrapped in an Optional' do
