@@ -3,6 +3,7 @@ require 'monads/monad'
 module Monads
   class Eventually
     include Monad
+
     attr_reader :block
 
     def initialize(&block)

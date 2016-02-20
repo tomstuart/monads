@@ -3,6 +3,7 @@ require 'monads/monad'
 module Monads
   class Many
     include Monad
+
     attr_reader :values
 
     def initialize(values)
