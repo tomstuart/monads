@@ -87,10 +87,23 @@ module Monads
           expect(value).to receive(:challenge)
         end
         many.challenge
+        expect { many.method(:challenge) }.not_to raise_error
+        expect(many).to respond_to(:challenge)
       end
 
       it 'returns the messages’ results wrapped in a Many' do
         expect(many.challenge.values).to eq responses
+      end
+
+      context 'when values are Enumerable' do
+        let(:values) { [[1, 2], [3, 5]] }
+
+        it 'forwards any unrecognised message to the value' do
+          expect(many.first).to be_a(Many)
+          expect(many.first.values).to eq [1, 3]
+          expect(many.last).to be_a(Many)
+          expect(many.last.values).to eq [2, 5]
+        end
       end
     end
   end

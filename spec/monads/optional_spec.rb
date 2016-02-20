@@ -89,10 +89,23 @@ module Monads
       it 'forwards any unrecognised message to the value' do
         expect(value).to receive(:challenge)
         optional.challenge
+        expect { optional.method(:challenge) }.not_to raise_error
+        expect(optional).to respond_to(:challenge)
       end
 
       it 'returns the message’s result wrapped in an Optional' do
         expect(optional.challenge.value).to eq response
+      end
+
+      context 'when value is Enumerable' do
+        let(:value) { [1, 2, 3] }
+
+        it 'forwards any unrecognised message to the value' do
+          expect(optional.first).to be_a(Optional)
+          expect(optional.first.value).to eq 1
+          expect(optional.last).to be_a(Optional)
+          expect(optional.last.value).to eq 3
+        end
       end
     end
   end
