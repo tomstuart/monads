@@ -102,14 +102,32 @@ module Monads
       it 'forwards any unrecognised message to the block’s value' do
         expect(value).to receive(:challenge)
         Eventually.new { |success| success.call(value) }.challenge.run {}
-        expect { Eventually.new { |success| success.call(value) }.method(:challenge) }.not_to raise_error
-        expect(Eventually.new { |success| success.call(value) }).to respond_to(:challenge)
       end
 
       it 'returns the message’s result wrapped in an Eventually' do
         @result = nil
         Eventually.new { |success| success.call(value) }.challenge.run { |result| @result = result }
         expect(@result).to eq response
+      end
+
+      context 'when the value responds to the message' do
+        it 'reports that the Eventually responds to the message' do
+          expect(Eventually.new { |success| success.call(value) }).to respond_to(:challenge)
+        end
+
+        it 'allows a Method object to be retrieved' do
+          expect(Eventually.new { |success| success.call(value) }.method(:challenge)).to be_a(Method)
+        end
+      end
+
+      context 'when the value doesn’t respond to the message' do
+        it 'reports that the Eventually doesn’t respond to the message' do
+          expect(Eventually.new { |success| success.call(double) }).not_to respond_to(:challenge)
+        end
+
+        it 'doesn’t allow a Method object to be retrieved' do
+          expect { Eventually.new { |success| success.call(double) }.method(:challenge) }.to raise_error(NameError)
+        end
       end
 
       context 'when value is Enumerable' do

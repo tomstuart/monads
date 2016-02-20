@@ -16,6 +16,10 @@ module Monads
       Many.new(values.map(&block).flat_map(&:values))
     end
 
+    def respond_to_missing?(method_name, include_private = false)
+      super || values.all? { |value| value.respond_to?(method_name, include_private) }
+    end
+
     def self.from_value(value)
       Many.new([value])
     end

@@ -89,12 +89,32 @@ module Monads
       it 'forwards any unrecognised message to the value' do
         expect(value).to receive(:challenge)
         optional.challenge
-        expect { optional.method(:challenge) }.not_to raise_error
-        expect(optional).to respond_to(:challenge)
       end
 
       it 'returns the message’s result wrapped in an Optional' do
         expect(optional.challenge.value).to eq response
+      end
+
+      context 'when the value responds to the message' do
+        it 'reports that the Optional responds to the message' do
+          expect(optional).to respond_to(:challenge)
+        end
+
+        it 'allows a Method object to be retrieved' do
+          expect(optional.method(:challenge)).to be_a(Method)
+        end
+      end
+
+      context 'when the value doesn’t respond to the message' do
+        let(:optional) { Optional.new(double) }
+
+        it 'reports that the Optional doesn’t respond to the message' do
+          expect(optional).not_to respond_to(:challenge)
+        end
+
+        it 'doesn’t allow a Method object to be retrieved' do
+          expect { optional.method(:challenge) }.to raise_error(NameError)
+        end
       end
 
       context 'when value is Enumerable' do

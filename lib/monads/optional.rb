@@ -20,6 +20,10 @@ module Monads
       end
     end
 
+    def respond_to_missing?(method_name, include_private = false)
+      super || value.nil? || value.respond_to?(method_name, include_private)
+    end
+
     def self.from_value(value)
       Optional.new(value)
     end

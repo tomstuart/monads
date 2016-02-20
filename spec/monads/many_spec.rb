@@ -87,12 +87,32 @@ module Monads
           expect(value).to receive(:challenge)
         end
         many.challenge
-        expect { many.method(:challenge) }.not_to raise_error
-        expect(many).to respond_to(:challenge)
       end
 
       it 'returns the messages’ results wrapped in a Many' do
         expect(many.challenge.values).to eq responses
+      end
+
+      context 'when all of the values respond to the message' do
+        it 'reports that the Many responds to the message' do
+          expect(many).to respond_to(:challenge)
+        end
+
+        it 'allows a Method object to be retrieved' do
+          expect(many.method(:challenge)).to be_a(Method)
+        end
+      end
+
+      context 'when any of the values don’t respond to the message' do
+        let(:many) { Many.new(values + [double]) }
+
+        it 'reports that the Many doesn’t respond to the message' do
+          expect(many).not_to respond_to(:challenge)
+        end
+
+        it 'doesn’t allow a Method object to be retrieved' do
+          expect { many.method(:challenge) }.to raise_error(NameError)
+        end
       end
 
       context 'when values are Enumerable' do
