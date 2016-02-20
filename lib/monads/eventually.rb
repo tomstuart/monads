@@ -1,11 +1,12 @@
 require 'monads/monad'
 
 module Monads
-  Eventually = Struct.new(:block) do
+  class Eventually
     include Monad
+    attr_reader :block
 
     def initialize(&block)
-      super(block)
+      @block = block
     end
 
     def run(&success)

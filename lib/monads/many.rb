@@ -1,8 +1,13 @@
 require 'monads/monad'
 
 module Monads
-  Many = Struct.new(:values) do
+  class Many
     include Monad
+    attr_reader :values
+
+    def initialize(values)
+      @values = values
+    end
 
     def and_then(&block)
       block = ensure_monadic_result(&block)

@@ -109,6 +109,17 @@ module Monads
         Eventually.new { |success| success.call(value) }.challenge.run { |result| @result = result }
         expect(@result).to eq response
       end
+
+      context 'when value is Enumerable' do
+        let(:value) { [1, 2, 3] }
+
+        it 'forwards any unrecognised message to the value' do
+          expect(Eventually.new { |success| success.call(value) }.first).to be_a(Eventually)
+          expect(Eventually.new { |success| success.call(value) }.first.run { |value| value }).to eq 1
+          expect(Eventually.new { |success| success.call(value) }.last).to be_a(Eventually)
+          expect(Eventually.new { |success| success.call(value) }.last.run { |value| value }).to eq 3
+        end
+      end
     end
   end
 end
