@@ -48,6 +48,14 @@ module Monads
       it 'wraps a value in a Many' do
         expect(Many.from_value(value).values).to eq [value]
       end
+
+      context 'when value is Enumerable' do
+        let(:outer_many) { [double(inner_many: inner_many)] }
+        let(:inner_many) { [double(data: data)] }
+        let(:data) { [1, 2, 3, 4] }
+
+        it { expect(Many.from_value(outer_many).inner_many.data.values).to eq data }
+      end
     end
 
     describe '#within' do
