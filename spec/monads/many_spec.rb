@@ -128,25 +128,9 @@ module Monads
     end
 
     describe "unpacking nested many values" do
-      let(:expected_values) do
-        2.times.map do |i|
-          3.times.map do |j|
-            4.times.map do |k|
-              "#{i}#{j}#{k}"
-            end
-          end
-        end.flatten
-      end
-
-      let(:values) do
-        2.times.map do |i|
-          double(:"root#{i}", branches: 3.times.map do |j|
-            double(:"branch#{i}#{j}", leaves: 4.times.map do |k|
-              "#{i}#{j}#{k}"
-            end)
-          end)
-        end
-      end
+      let(:expected_values) { %w(tiger lion hamster) }
+      let(:branches)        { [double(:branch, leaves:  expected_values)] }
+      let(:values)          { [double(:root, branches: branches)] }
 
       it "retrieves leaves two levels deep" do
         expect(many.branches.leaves.values).to eq expected_values
