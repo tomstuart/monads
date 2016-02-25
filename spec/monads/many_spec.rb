@@ -128,13 +128,12 @@ module Monads
     end
 
     describe "unpacking nested many values" do
-      let(:expected_values) { %w(tiger lion hamster) }
-      let(:branches)        { [double(:branch, leaves:  expected_values)] }
-      let(:values)          { [double(:root, branches: branches)] }
+      let(:expected_values)   { %w(1984 Hamlet Macbeth) }
+      let(:orwel_books)       { [double(:book, title: '1984')] }
+      let(:shakespeare_books) { [double(:book, title: 'Hamlet'), double(:book, title: 'Macbeth')] }
+      let(:values)            { [double(:orwell, books: orwel_books), double(:shakespeare, books: shakespeare_books)] }
 
-      it "retrieves leaves two levels deep" do
-        expect(many.branches.leaves.values).to eq expected_values
-      end
+      it { expect(many.books.title.values).to eq expected_values }
     end
   end
 end
