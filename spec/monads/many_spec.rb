@@ -135,5 +135,12 @@ module Monads
 
       it { expect(many.books.title.values).to eq expected_values }
     end
+
+    describe "respecting deeply nested arrays when unpacking only a few levels" do
+      let(:expected_values)   { [:a, [:b, :c], :d, [:e, :f]] }
+      let(:values)            { [[1, :a], [2, [:b, :c]], [3, :d], [4, [:e, :f]]] }
+
+      it { expect(many.slice(1, 1).values).to eq expected_values }
+    end
   end
 end
