@@ -3,6 +3,11 @@ require 'monads/monad'
 module Monads
   class Optional
     include Monad
+    attr_accessor :value
+
+    def initialize(value)
+      @value = value
+    end
 
     attr_reader :value
 
