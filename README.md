@@ -1,6 +1,6 @@
 # Monads
 
-[![Build Status](https://travis-ci.org/tomstuart/monads.svg?branch=master)](https://travis-ci.org/tomstuart/monads)
+![](https://github.com/tomstuart/monads/workflows/Ruby/badge.svg)
 
 This library provides simple Ruby implementations of some common [monads](http://en.wikipedia.org/wiki/Monad_(functional_programming)).
 
