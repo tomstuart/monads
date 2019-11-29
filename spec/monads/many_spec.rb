@@ -126,5 +126,21 @@ module Monads
         end
       end
     end
+
+    describe "unpacking nested many values" do
+      let(:expected_values)   { %w(1984 Hamlet Macbeth) }
+      let(:orwel_books)       { [double(:book, title: '1984')] }
+      let(:shakespeare_books) { [double(:book, title: 'Hamlet'), double(:book, title: 'Macbeth')] }
+      let(:values)            { [double(:orwell, books: orwel_books), double(:shakespeare, books: shakespeare_books)] }
+
+      it { expect(many.books.title.values).to eq expected_values }
+    end
+
+    describe "respecting deeply nested arrays when unpacking only a few levels" do
+      let(:expected_values)   { [:a, [:b, :c], :d, [:e, :f]] }
+      let(:values)            { [[1, :a], [2, [:b, :c]], [3, :d], [4, [:e, :f]]] }
+
+      it { expect(many.slice(1, 1).values).to eq expected_values }
+    end
   end
 end
